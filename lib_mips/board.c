@@ -1283,7 +1283,7 @@ void board_init_r (gd_t *id, ulong dest_addr)
 				break;
 		}
 		printf( "============================================ \n" );
-		printf( "CleanWRT u-boot_mt7620 Version: %s\n", WEB_FAILSAFE_VERSION );
+		printf( "NEXX WT-3020 Version: %s\n", WEB_FAILSAFE_VERSION );
 		printf( "-------------------------------------------- \n" );
 		printf( "%s %s %s\n", CHIP_TYPE, CHIP_VERSION, GMAC_MODE );
 #if defined (MT7620_ASIC_BOARD) || defined(MT7620_FPGA_BOARD)
@@ -1405,11 +1405,11 @@ void board_init_r (gd_t *id, ulong dest_addr)
 	// wait 0,5s
 	udelay(500000);
 
-	printf( "\nPress press WPS button for more than 2 seconds to run web failsafe mode\n\n" );
+	printf( "\nPress press RESET button for more than 2 seconds to run web failsafe mode\n\n" );
 
-	printf( "WPS button is pressed for: %2d second(s)", counter );
+	printf( "RESET button is pressed for: %2d second(s)", counter );
 
-	while( DETECT_WPS() ) {
+	while( DETECT_RST() ) {
 
 		// LED ON and wait 0.2s
 		LEDON();
@@ -1421,10 +1421,10 @@ void board_init_r (gd_t *id, ulong dest_addr)
 
 		counter++;
 
-		// how long the WPS button is pressed?
+		// how long the RESET button is pressed?
 		printf("\b\b\b\b\b\b\b\b\b\b\b\b%2d second(s)", counter);
 
-		if ( !DETECT_WPS() ){
+		if ( !DETECT_RST() ){
 			break;
 		}
 
@@ -1437,11 +1437,11 @@ void board_init_r (gd_t *id, ulong dest_addr)
 
 	if ( counter > 0 ) {
 
-		printf( "\n\nWPS button was pressed for %d seconds\nHTTP server is starting for firmware update...\n\n", counter );
+		printf( "\n\nRESET button was pressed for %d seconds\nHTTP server is starting for firmware update...\n\n", counter );
 		eth_initialize(gd->bd);
 		NetLoopHttpd();
 	} else {
-		printf( "\n\nCatution: WPS button wasn't pressed or not long enough!\nContinuing normal boot...\n\n" );
+		printf( "\n\nCaution: RESET button wasn't pressed or not long enough!\nContinuing normal boot...\n\n" );
 	}
 
 /* enter web failsafe mode, added by hubo, July 1st 2014 */

@@ -390,17 +390,17 @@ void rst_fengine(void)
 
 void gpio_init(void)
 {
-	printf( "MT7620 Ai-BR100 gpio init : WPS / RESET pin\n" );
-	mtk7620_set_gpio_dir(WPS_BTN, 1);
+	printf( "NEXX WT-3020 gpio init : WPS / RESET pin\n" );
+	mtk7620_set_gpio_dir(RST_BTN, 1);
 }
 
-unsigned long DETECT(void)
+unsigned long DETECT_RST(void)
 {
 	int key = 0;
 
 	if(!mtk7620_get_gpio_pin(RST_BTN)) {
 		key = 1;
-		printf("reset buootn pressed!\n");
+		printf("reset button pressed!\n");
 	}
 	return key;
 }
@@ -411,16 +411,16 @@ unsigned long DETECT_WPS(void)
 
 	if(!mtk7620_get_gpio_pin(WPS_BTN)) {
 		key = 1;
-//		printf("wps buootn pressed!\n");
+		printf("wps button pressed!\n");
 	}
 	return key;
 }
-/*
+
 void PWR_LEDON(void)
 {
 	mtk7620_set_gpio_pin(PWR_LED, 0);
 }
-*/
+
 void LEDON( void )
 {
 	mtk7620_set_gpio_pin( WAN_LED, 0 );

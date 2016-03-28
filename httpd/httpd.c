@@ -38,7 +38,7 @@ extern int webfailsafe_upgrade_type;
 extern ulong NetBootFileXferSize;
 extern unsigned char *webfailsafe_data_pointer;
 
-// extern flash_info_t flash_info[];
+//extern flash_info_t flash_info[];
 
 // http app state
 struct httpd_state *hs;
@@ -67,9 +67,9 @@ static int atoi(const char *s){
 }
 
 // print downloading progress
-static void httpd_download_progress( void ){
-	if ( post_packet_counter == 39 ) {
-		puts( "\n         " );
+static void httpd_download_progress(void){
+	if(post_packet_counter == 39){
+		puts("\n         ");
 		post_packet_counter = 0;
 	}
 
@@ -78,9 +78,9 @@ static void httpd_download_progress( void ){
 }
 
 // http server init
-void httpd_init( void ) {
+void httpd_init(void){
 	fs_init();
-	uip_listen( HTONS( 80 ) );
+	uip_listen(HTONS(80));
 }
 
 // reset app state
@@ -105,30 +105,30 @@ static int httpd_findandstore_firstchunk(void){
 	char *end = NULL;
 //	flash_info_t *info = &flash_info[0];
 
-	if ( !boundary_value ) {
+	if(!boundary_value){
 		return(0);
 	}
 
 	// chek if we have data in packet
-	start = ( char * )strstr( ( char * )uip_appdata, ( char * )boundary_value );
+	start = (char *)strstr((char *)uip_appdata, (char *)boundary_value);
 
-	if ( start ) {
+	if(start){
 
 		// ok, we have data in this packet!
 		// find upgrade type
 
-		end = ( char * )strstr( ( char * )start, "name=\"firmware\"" );
+		end = (char *)strstr((char *)start, "name=\"firmware\"");
 
-		if ( end ) {
+		if(end){
 
-			printf( "Upgrade type: firmware\n" );
+			printf("Upgrade type: firmware\n");
 			webfailsafe_upgrade_type = WEBFAILSAFE_UPGRADE_TYPE_FIRMWARE;
 
 		} else {
 
-			end = ( char * )strstr( ( char * )start, "name=\"uboot\"" );
+			end = (char *)strstr((char *)start, "name=\"uboot\"");
 
-			if ( end ) {
+			if(end){
 #if defined(WEBFAILSAFE_DISABLE_UBOOT_UPGRADE)
 				printf("## Error: U-Boot upgrade is not allowed on this board!\n");
 				webfailsafe_upload_failed = 1;
@@ -147,11 +147,11 @@ static int httpd_findandstore_firstchunk(void){
 #else
 					printf("Upgrade type: ART\n");
 					webfailsafe_upgrade_type = WEBFAILSAFE_UPGRADE_TYPE_ART;
-
+/*
 					// if we don't have ART partition offset, it means that it should be
 					// stored on the last 64 KiB block -> in most supported board
 					// the ART partition occupies last 64 KiB block
-/* #if !defined(WEBFAILSAFE_UPLOAD_ART_ADDRESS)
+#if !defined(WEBFAILSAFE_UPLOAD_ART_ADDRESS)
 					// if we don't know the flash type, we won't allow to update ART,
 					// because we don't know flash size
 					if(info->flash_id == FLASH_CUSTOM){
@@ -203,8 +203,8 @@ static int httpd_findandstore_firstchunk(void){
 
 					printf("## Error: wrong file size, should be: %d bytes!\n", WEBFAILSAFE_UPLOAD_ART_SIZE_IN_BYTES);
 					webfailsafe_upload_failed = 1;
-/*
-				// firmware can't exceed: (FLASH_SIZE -  WEBFAILSAFE_UPLOAD_LIMITED_AREA_IN_BYTES)
+
+/*				// firmware can't exceed: (FLASH_SIZE -  WEBFAILSAFE_UPLOAD_LIMITED_AREA_IN_BYTES)
 				} else if(hs->upload_total > (info->size - WEBFAILSAFE_UPLOAD_LIMITED_AREA_IN_BYTES)){
 
 					printf("## Error: file too big!\n");

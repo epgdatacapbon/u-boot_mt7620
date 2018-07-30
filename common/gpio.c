@@ -390,7 +390,7 @@ void rst_fengine(void)
 
 void gpio_init(void)
 {
-	printf( "NEXX WT-3020 gpio init : WPS / RESET pin\n" );
+	printf( "NEXX WT3020 gpio init : WPS / RESET pin\n" );
 	mtk7620_set_gpio_dir(RST_BTN, 1);
 }
 

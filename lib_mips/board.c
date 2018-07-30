@@ -1283,7 +1283,7 @@ void board_init_r (gd_t *id, ulong dest_addr)
 				break;
 		}
 		printf( "============================================ \n" );
-		printf( "NEXX WT-3020 Version: %s\n", WEB_FAILSAFE_VERSION );
+		printf( "NEXX WT3020 Version: %s\n", WEB_FAILSAFE_VERSION );
 		printf( "-------------------------------------------- \n" );
 		printf( "%s %s %s\n", CHIP_TYPE, CHIP_VERSION, GMAC_MODE );
 #if defined (MT7620_ASIC_BOARD) || defined(MT7620_FPGA_BOARD)
